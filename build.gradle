@@ -1,13 +1,12 @@
 plugins {
     id 'org.springframework.boot' version '2.5.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'com.vaadin' version '0.14.6.0'
     id 'java'
 }
 
 group = 'com.travel'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
@@ -19,7 +18,11 @@ ext {
 
 dependencies {
     implementation 'com.vaadin:vaadin-spring-boot-starter'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    compileOnly('org.projectlombok:lombok')
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.springframework.security:spring-security-test'
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 dependencyManagement {
