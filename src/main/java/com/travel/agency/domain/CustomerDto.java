@@ -15,7 +15,7 @@ import java.util.Collections;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CustomerDto implements UserDetails {
+public class CustomerDto implements UserDetails{
     private Long id;
     private String username;
     private String lastname;
@@ -53,8 +53,13 @@ public class CustomerDto implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
+    public CustomerDto(String username, String lastname, String email, String phone, String password, String role) {
+        this.username = username;
+        this.lastname = lastname;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.role = role;
+    }
 }

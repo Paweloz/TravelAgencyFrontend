@@ -35,7 +35,7 @@ public class CustomerClient {
 
     public Boolean checkIfExists(String username) {
         try {
-            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getCustomerEndpoint() + "/exits")
+            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getCustomerEndpoint() + "/exist")
                     .queryParam("name", username)
                     .build()
                     .encode()
@@ -43,6 +43,19 @@ public class CustomerClient {
             return restTemplate.getForObject(uri, Boolean.class);
         } catch (RestClientException e) {
             log.warn("Customer with name : " + username +" doesn't exist");
+        }
+        return false;
+    }
+
+    public Boolean saveCustomerInDB(CustomerDto customerDto) {
+        try {
+            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getCustomerEndpoint())
+                    .build()
+                    .encode()
+                    .toUri();
+            return restTemplate.postForObject(uri, customerDto, Boolean.class);
+        }catch (RestClientException e) {
+            log.warn("Couldn't save user in DB");
         }
         return false;
     }
