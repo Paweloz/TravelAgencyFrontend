@@ -37,14 +37,16 @@ public class MainView extends AppLayout {
         header.setWidth("100%");
         header.addClassName("header");
         addToNavbar(header);
+
     }
 
     private void createDrawer() {
-        RouterLink home = new RouterLink("Last Minute", TripsView.class);
+        RouterLink home = new RouterLink("Home", HomeView.class);
         home.setHighlightCondition(HighlightConditions.sameLocation());
         addToDrawer(new VerticalLayout(home,
-                new RouterLink("Bookings", BookingView.class),
-                new RouterLink("User Info", UserDetailsView.class),
+                new RouterLink("Find Trip", TripsView.class),
+                new RouterLink("Your Bookings", BookingView.class),
+                new RouterLink("Edit user details", UserDetailsView.class),
                 new RouterLink("Contact", ContactView.class)
         ));
     }
