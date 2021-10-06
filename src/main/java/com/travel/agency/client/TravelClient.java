@@ -22,19 +22,28 @@ public class TravelClient {
     private final RestTemplate restTemplate;
     private final BackendConfig backendConfig;
 
-    public List<TravelDto> getAvaliableTrips(String date, String destination) {
-        URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getTravelEndpoint())
-                .queryParam("date", date)
+    public List<TravelDto> getAvaliableTrips(String origin, String destination) {
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getTravelEndpoint() + "/getTrips")
+                .queryParam("origin", origin)
                 .queryParam("destination", destination)
                 .build()
                 .encode()
                 .toUri();
-        try {
-            TravelDto[] travelDtos = restTemplate.getForObject(uri, TravelDto[].class);
-            return travelDtos != null ? Arrays.asList(travelDtos) : new ArrayList<>();
-        }catch (RestClientException e) {
-            log.warn("Couldn't retrieve available travels from the server");
-        }
-        return new ArrayList<>();
+        TravelDto[] travelDto = restTemplate.getForObject(uri, TravelDto[].class);
+        return Arrays.asList(travelDto);
+
+//        try {
+//        URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getTravelEndpoint() + "/getTrips")
+//                .queryParam("origin", origin)
+//                .queryParam("destination", destination)
+//                .build()
+//                .encode()
+//                .toUri();
+//            TravelDto[] travelDtos = restTemplate.getForObject(uri, TravelDto[].class);
+//            return travelDtos != null ? Arrays.asList(travelDtos) : new ArrayList<>();
+//        }catch (RestClientException e) {
+//            log.warn("Couldn't retrieve available travels from the server");
+//        }
+//        return new ArrayList<>();
     }
 }
