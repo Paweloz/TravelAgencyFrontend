@@ -8,6 +8,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.ItemDoubleClickEvent;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -56,10 +57,16 @@ public class TripsView extends VerticalLayout {
             List<TravelDto> fetchedTravel = travelService.findTrips(origin, destination);
             setMessage(fetchedTravel);
             searchingResults.setItems(fetchedTravel);
+            searchingResults.addItemDoubleClickListener(item -> findHotel(item));
         } else {
             message.setText("Both values are required");
         }
     }
+
+    private void findHotel(ItemDoubleClickEvent<TravelDto> item) {
+
+    }
+
 
     private void setMessage(List<TravelDto> fetchedTravel) {
         if (fetchedTravel.size() != 0) {

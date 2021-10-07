@@ -13,4 +13,6 @@ public class BackendConfig {
     private String travelEndpoint;
     @Value("${login.endpoint}")
     private String loginEndpoint;
+    @Value("${hotel.endpoint}")
+    private String hotelEndpoint;
 }
