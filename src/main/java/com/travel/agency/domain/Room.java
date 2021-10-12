@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Room {
     private String name;
-    //private String roomName;
-    //private BigDecimal price;
+    private BigDecimal pricePLN;
     private String starRating;
 }

@@ -8,11 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Component
 @Slf4j
@@ -36,30 +32,19 @@ public class HotelClient {
     }
 
     public Room getRooms(String hotelId, String checkIn, String checkOut) {
-        URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getHotelEndpoint())
-                .queryParam("hotelId", hotelId)
-                .queryParam("checkIn", checkIn)
-                .queryParam("checkOut", checkOut)
-                .build()
-                .encode()
-                .toUri();
-        Room room = restTemplate.getForObject(uri, Room.class);
-        return room != null ? room : new Room();
-
-//        try {
-//            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getHotelEndpoint())
-//                    .queryParam("hotelId", hotelId)
-//                    .queryParam("checkIn", checkIn)
-//                    .queryParam("checkOut", checkOut)
-//                    .build()
-//                    .encode()
-//                    .toUri();
-//            Room[] rooms = restTemplate.getForObject(uri, Room[].class);
-//            return rooms != null ? Arrays.asList(rooms) : new ArrayList<>();
-//
-//        } catch (RestClientException e) {
-//            log.warn("Could retrieve pricing from external service");
-//        }
-//        return new ArrayList<>();
+        try {
+            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getHotelEndpoint())
+                    .queryParam("hotelId", hotelId)
+                    .queryParam("checkIn", checkIn)
+                    .queryParam("checkOut", checkOut)
+                    .build()
+                    .encode()
+                    .toUri();
+            Room room = restTemplate.getForObject(uri, Room.class);
+            return room != null ? room : new Room();
+        } catch (RestClientException e) {
+            log.warn("Could retrieve pricing from external service");
+        }
+        return new Room();
     }
 }

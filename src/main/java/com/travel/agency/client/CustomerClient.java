@@ -2,7 +2,6 @@ package com.travel.agency.client;
 
 import com.travel.agency.config.BackendConfig;
 import com.travel.agency.domain.CustomerDto;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -6,21 +6,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
 
 @Component
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TravelDto {
+public class Travel {
     private String origin;
     private String destination;
     private String startDate;
     private String finishDate;
-    private BigDecimal totalPrice;
+    private BigDecimal flightPrice;
     private int daysQuantity;
 }

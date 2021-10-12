@@ -18,8 +18,6 @@ public class MainView extends AppLayout {
 
     private final SecurityService securityService;
 
-
-
     public MainView(SecurityService securityService) {
         this.securityService = securityService;
         createHeader();
@@ -45,7 +43,6 @@ public class MainView extends AppLayout {
         home.setHighlightCondition(HighlightConditions.sameLocation());
         addToDrawer(new VerticalLayout(home,
                 new RouterLink("Find Trip", TripsView.class),
-                new RouterLink("Pick your room", HotelsView.class),
                 new RouterLink("Your Bookings", BookingView.class),
                 new RouterLink("Edit user details", UserDetailsView.class),
                 new RouterLink("Contact", ContactView.class)

@@ -1,6 +1,6 @@
 package com.travel.agency.ui;
 
-import com.travel.agency.domain.TravelDto;
+import com.travel.agency.domain.Travel;
 import com.travel.agency.service.TravelService;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -15,7 +15,7 @@ public class HomeView extends VerticalLayout {
 
     public HomeView(TravelService travelService) {
         this.travelService = travelService;
-        List<TravelDto> travelDtos = travelService.getLastMinuteTrips();
+        List<Travel> travels = travelService.getLastMinuteTrips();
         Image image = new Image("https://dichvuhangkhong.com.vn/wp-content/uploads/2015/02/banner-may-bay.jpg", "gif");
         add(image);
     }

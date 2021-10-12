@@ -1,7 +1,7 @@
 package com.travel.agency.client;
 
 import com.travel.agency.config.BackendConfig;
-import com.travel.agency.domain.TravelDto;
+import com.travel.agency.domain.Travel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -22,7 +22,7 @@ public class TravelClient {
     private final RestTemplate restTemplate;
     private final BackendConfig backendConfig;
 
-    public List<TravelDto> getAvaliableTrips(String origin, String destination) {
+    public List<Travel> getAvaliableTrips(String origin, String destination) {
         try {
         URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getTravelEndpoint() + "/getTrips")
                 .queryParam("origin", origin)
@@ -30,8 +30,8 @@ public class TravelClient {
                 .build()
                 .encode()
                 .toUri();
-            TravelDto[] travelDtos = restTemplate.getForObject(uri, TravelDto[].class);
-            return travelDtos != null ? Arrays.asList(travelDtos) : new ArrayList<>();
+            Travel[] travels = restTemplate.getForObject(uri, Travel[].class);
+            return travels != null ? Arrays.asList(travels) : new ArrayList<>();
         }catch (RestClientException e) {
             log.warn("Couldn't retrieve available travels from the server");
         }
