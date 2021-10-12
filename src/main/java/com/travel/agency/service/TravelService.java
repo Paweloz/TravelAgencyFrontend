@@ -28,7 +28,7 @@ public class TravelService {
         for ( TravelDto travelDto : fetchedTrips ){
             int daysQuantity = LocalDate.parse(travelDto.getFinishDate()).compareTo(LocalDate.parse(travelDto.getStartDate()));
             travelDto.setDaysQuantity(daysQuantity);
-            if (daysQuantity >= 5) {
+            if (daysQuantity >= 5 && daysQuantity <= 14) {
                 filteredTrips.add(travelDto);
             }
         }

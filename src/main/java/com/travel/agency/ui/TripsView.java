@@ -27,6 +27,7 @@ public class TripsView extends VerticalLayout {
     private final ComboBox<TravelOrigins> selectOrigin = new ComboBox<>();
     private final Button submit = new Button("Search");
     private Label message = new Label("Please choose your departure date and destination");
+    public static TravelDto chosenTrip;
     private HorizontalLayout browserSection = new HorizontalLayout();
 
     public TripsView(TravelService travelService) {
@@ -57,16 +58,16 @@ public class TripsView extends VerticalLayout {
             List<TravelDto> fetchedTravel = travelService.findTrips(origin, destination);
             setMessage(fetchedTravel);
             searchingResults.setItems(fetchedTravel);
-            searchingResults.addItemDoubleClickListener(item -> findHotel(item));
+            searchingResults.addItemDoubleClickListener(item -> findHotel(item.getItem()));
         } else {
             message.setText("Both values are required");
         }
     }
 
-    private void findHotel(ItemDoubleClickEvent<TravelDto> item) {
-
+    private static void findHotel(TravelDto trip) {
+        System.out.println(trip.toString());
+         chosenTrip = trip;
     }
-
 
     private void setMessage(List<TravelDto> fetchedTravel) {
         if (fetchedTravel.size() != 0) {
@@ -75,4 +76,5 @@ public class TripsView extends VerticalLayout {
             message.setText("Couldn't find any trips for given parameters");
         }
     }
+
 }

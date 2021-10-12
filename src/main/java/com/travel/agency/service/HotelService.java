@@ -12,11 +12,11 @@ import java.util.List;
 public class HotelService {
     private final HotelClient hotelClient;
 
-    public String findHotelInLocation(String location) {
+    public String getHotelId(String location) {
        return hotelClient.getHotelId(location);
     }
 
-    public List<Room> getRooms(String hotelId, String checkIn, String checkOut) {
+    public Room getRooms(String hotelId, String checkIn, String checkOut) {
         return hotelClient.getRooms(hotelId, checkIn, checkOut);
     }
 }

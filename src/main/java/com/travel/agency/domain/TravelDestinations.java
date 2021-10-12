@@ -13,7 +13,7 @@ public enum TravelDestinations {
     PUNTA_CANA("PUJ"),
     SARDINIA("AHO"),
     MAJORCA("PMI"),
-    TENERIFE("TENE");
+    TENERIFE("TFS");
 
     private String destinationId;
 

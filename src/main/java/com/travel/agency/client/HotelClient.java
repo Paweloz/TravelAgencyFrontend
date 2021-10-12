@@ -35,20 +35,31 @@ public class HotelClient {
         return "";
     }
 
-    public List<Room> getRooms(String hotelId, String checkIn, String checkOut) {
-        try {
-            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getHotelEndpoint())
-                    .queryParam("hotelId", hotelId)
-                    .queryParam("checkIn", checkIn)
-                    .queryParam("checkOut", checkOut)
-                    .build()
-                    .encode()
-                    .toUri();
-            Room[] rooms = restTemplate.getForObject(uri, Room[].class);
-            return rooms != null ? Arrays.asList(rooms) : new ArrayList<>();
-        } catch (RestClientException e) {
-            log.warn("Could retrieve pricing from external service");
-        }
-        return new ArrayList<>();
+    public Room getRooms(String hotelId, String checkIn, String checkOut) {
+        URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getHotelEndpoint())
+                .queryParam("hotelId", hotelId)
+                .queryParam("checkIn", checkIn)
+                .queryParam("checkOut", checkOut)
+                .build()
+                .encode()
+                .toUri();
+        Room room = restTemplate.getForObject(uri, Room.class);
+        return room != null ? room : new Room();
+
+//        try {
+//            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getHotelEndpoint())
+//                    .queryParam("hotelId", hotelId)
+//                    .queryParam("checkIn", checkIn)
+//                    .queryParam("checkOut", checkOut)
+//                    .build()
+//                    .encode()
+//                    .toUri();
+//            Room[] rooms = restTemplate.getForObject(uri, Room[].class);
+//            return rooms != null ? Arrays.asList(rooms) : new ArrayList<>();
+//
+//        } catch (RestClientException e) {
+//            log.warn("Could retrieve pricing from external service");
+//        }
+//        return new ArrayList<>();
     }
 }
