@@ -1,7 +1,7 @@
 package com.travel.agency.client;
 
 import com.travel.agency.config.BackendConfig;
-import com.travel.agency.domain.Room;
+import com.travel.agency.domain.HotelDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -31,7 +31,7 @@ public class HotelClient {
         return "";
     }
 
-    public Room getRooms(String hotelId, String checkIn, String checkOut) {
+    public HotelDto getRooms(String hotelId, String checkIn, String checkOut) {
         try {
             URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getHotelEndpoint())
                     .queryParam("hotelId", hotelId)
@@ -40,11 +40,11 @@ public class HotelClient {
                     .build()
                     .encode()
                     .toUri();
-            Room room = restTemplate.getForObject(uri, Room.class);
-            return room != null ? room : new Room();
+            HotelDto hotelDto = restTemplate.getForObject(uri, HotelDto.class);
+            return hotelDto != null ? hotelDto : new HotelDto();
         } catch (RestClientException e) {
             log.warn("Could retrieve pricing from external service");
         }
-        return new Room();
+        return new HotelDto();
     }
 }

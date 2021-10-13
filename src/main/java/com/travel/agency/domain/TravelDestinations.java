@@ -11,7 +11,7 @@ public enum TravelDestinations {
     IBIZA("IBZ"),
     CANCUN("CUN"),
     PUNTA_CANA("PUJ"),
-    SARDINIA("AHO"),
+//    SARDINIA("AHO"),
     MAJORCA("PMI"),
     TENERIFE("TFS");
 

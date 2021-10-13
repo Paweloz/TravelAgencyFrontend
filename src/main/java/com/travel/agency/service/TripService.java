@@ -1,6 +1,6 @@
 package com.travel.agency.service;
 
-import com.travel.agency.domain.Room;
+import com.travel.agency.domain.HotelDto;
 import com.travel.agency.domain.Travel;
 import com.travel.agency.domain.TripsDto;
 import lombok.RequiredArgsConstructor;
@@ -14,29 +14,29 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TripService {
 
-    public TripsDto buildTrip(Travel travel, Room room) {
+    public TripsDto buildTrip(Travel travel, HotelDto hotelDto) {
         return new TripsDto(
                 travel.getOrigin(),
                 travel.getDestination(),
                 travel.getStartDate(),
                 travel.getFinishDate(),
                 travel.getDaysQuantity(),
-                room.getName(),
-                room.getStarRating(),
-                calculatePrice(travel, room)
+                hotelDto.getName(),
+                hotelDto.getStarRating(),
+                calculatePrice(travel, hotelDto)
                 );
     }
 
-    public List<TripsDto> buildOffer(List<Travel> travels, Room room) {
+    public List<TripsDto> buildOffer(List<Travel> travels, HotelDto hotelDto) {
         List<TripsDto> trips = new ArrayList<>();
         for (Travel travel : travels) {
-            trips.add(buildTrip(travel,room));
+            trips.add(buildTrip(travel, hotelDto));
         }
         return trips;
     }
 
-    private BigDecimal calculatePrice(Travel travel, Room room) {
-        BigDecimal hotelPrice = room.getPricePLN().multiply(new BigDecimal(travel.getDaysQuantity()));
+    private BigDecimal calculatePrice(Travel travel, HotelDto hotelDto) {
+        BigDecimal hotelPrice = hotelDto.getPricePerNight().multiply(new BigDecimal(travel.getDaysQuantity()));
         return hotelPrice.add(travel.getFlightPrice());
     }
 }

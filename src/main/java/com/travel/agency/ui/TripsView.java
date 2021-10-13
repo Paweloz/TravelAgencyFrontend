@@ -27,7 +27,6 @@ public class TripsView extends VerticalLayout {
     private final ComboBox<TravelOrigins> selectOrigin = new ComboBox<>();
     private final Button submit = new Button("Search");
     private Label message = new Label("Please choose your departure date and destination");
-    public static Travel chosenTrip;
     private HorizontalLayout browserSection = new HorizontalLayout();
 
     public TripsView(TravelService travelService, TripService tripService, HotelService hotelService ) {
@@ -57,10 +56,10 @@ public class TripsView extends VerticalLayout {
         if (selectOrigin.getValue() != null && selectDestination.getValue() != null) {
             List<Travel> fetchedTravel = getTravels();
             String hotelId = hotelService.getHotelId(selectDestination.getValue().toString());
-            Room room = hotelService.getRooms(hotelId,
+            HotelDto hotelDto = hotelService.getRooms(hotelId,
                     fetchedTravel.get(0).getStartDate(),
                     fetchedTravel.get(0).getFinishDate());
-            List<TripsDto> tripsToDisplay = tripService.buildOffer(fetchedTravel, room);
+            List<TripsDto> tripsToDisplay = tripService.buildOffer(fetchedTravel, hotelDto);
             setMessage(fetchedTravel);
             searchingResults.setItems(tripsToDisplay);
         } else {

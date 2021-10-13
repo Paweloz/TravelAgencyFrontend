@@ -1,7 +1,6 @@
 package com.travel.agency.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +13,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Room {
+public class HotelDto {
+    private String hotelId;
     private String name;
-    private BigDecimal pricePLN;
     private String starRating;
+    private BigDecimal pricePerNight;
+
 }
