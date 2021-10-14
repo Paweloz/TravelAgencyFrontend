@@ -1,7 +1,7 @@
 package com.travel.agency.client;
 
 import com.travel.agency.config.BackendConfig;
-import com.travel.agency.domain.CustomerDto;
+import com.travel.agency.domain.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,27 +14,27 @@ import java.net.URI;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class CustomerClient {
+public class UserClient {
     private final RestTemplate restTemplate;
     private final BackendConfig backendConfig;
 
-    public CustomerDto getCustomerByName(String username) {
+    public UserDto getUserByName(String username) {
         try {
-            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getCustomerEndpoint())
+            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getUserEndpoint())
                     .queryParam("name", username)
                     .build()
                     .encode()
                     .toUri();
-            return restTemplate.getForObject(uri, CustomerDto.class);
+            return restTemplate.getForObject(uri, UserDto.class);
         } catch (RestClientException e) {
             log.warn("Couldn't retrive user :" + username);
         }
-        return new CustomerDto();
+        return new UserDto();
     }
 
     public Boolean checkIfExists(String username) {
         try {
-            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getCustomerEndpoint() + "/exist")
+            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getUserEndpoint() + "/exist")
                     .queryParam("name", username)
                     .build()
                     .encode()
@@ -46,16 +46,25 @@ public class CustomerClient {
         return false;
     }
 
-    public Boolean saveCustomerInDB(CustomerDto customerDto) {
+    public Boolean saveUserInDB(UserDto userDto) {
         try {
-            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getCustomerEndpoint())
+            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getUserEndpoint())
                     .build()
                     .encode()
                     .toUri();
-            return restTemplate.postForObject(uri, customerDto, Boolean.class);
+            return restTemplate.postForObject(uri, userDto, Boolean.class);
         }catch (RestClientException e) {
             log.warn("Couldn't save user in DB");
         }
         return false;
+    }
+
+    public UserDto getUserById(Long id) {
+        try {
+            
+        } catch ( RestClientException e) {
+            log.warn("Could retrieve user with id : " + id);
+        }
+        return new UserDto();
     }
 }

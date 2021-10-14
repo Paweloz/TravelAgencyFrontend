@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Getter
 public class BackendConfig {
     @Value("${customer.endpoint}")
-    private String customerEndpoint;
+    private String userEndpoint;
     @Value("${travel.endpoint}")
     private String travelEndpoint;
     @Value("${login.endpoint}")

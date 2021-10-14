@@ -1,7 +1,7 @@
 package com.travel.agency.ui;
 
-import com.travel.agency.domain.CustomerDto;
-import com.travel.agency.service.CustomerService;
+import com.travel.agency.domain.UserDto;
+import com.travel.agency.service.UserService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Slf4j
 public class RegisterView extends VerticalLayout {
-    private CustomerService customerService;
+    private UserService userService;
     private LoginForm loginForm;
     private Label message = new Label();
     private TextField username = new TextField("Name");
@@ -56,11 +56,11 @@ public class RegisterView extends VerticalLayout {
     }
 
     private void clickRegisterButton() {
-        if(customerService.existByName(this.getUsername().getValue())) {
+        if(userService.existByName(this.getUsername().getValue())) {
             message.setText("Customer named " + this.getUsername().getValue() +" already exists in DB");
             return;
         }
-        CustomerDto customerToSave = new CustomerDto(
+        UserDto customerToSave = new UserDto(
                 this.getUsername().getValue(),
                 this.getLastname().getValue(),
                 this.getEmail().getValue(),
@@ -68,14 +68,14 @@ public class RegisterView extends VerticalLayout {
                 this.getPassword().getValue(),
                 "USER"
         );
-       if (customerService.saveNewCustomer(customerToSave)) {
+       if (userService.saveNewUser(customerToSave)) {
            message.setText("Customer created succesfully");
        }
     }
 
 
-    public void setCustomerService(CustomerService customerService) {
-        this.customerService = customerService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     public void setLoginForm(LoginForm loginForm) {

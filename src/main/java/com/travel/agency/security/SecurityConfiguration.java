@@ -1,7 +1,6 @@
 package com.travel.agency.security;
 
-import com.travel.agency.service.CustomerService;
-import lombok.AllArgsConstructor;
+import com.travel.agency.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_URL = "/login";
     private static final String LOGOUT_SUCCESS_URL = "/login";
 
-    private final CustomerService customerService;
+    private final UserService userService;
 
     @Bean
     public PasswordEncoder getPasswordEncoder(){
@@ -31,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customerService);
+        auth.userDetailsService(userService);
     }
 
     @Override

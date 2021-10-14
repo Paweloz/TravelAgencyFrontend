@@ -1,8 +1,8 @@
 package com.travel.agency.ui;
 
-import com.travel.agency.domain.CustomerDto;
-import com.travel.agency.domain.CustomerDtoMap;
-import com.travel.agency.service.CustomerService;
+import com.travel.agency.domain.UserDto;
+import com.travel.agency.domain.UserDtoMap;
+import com.travel.agency.service.UserService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.login.LoginForm;
@@ -16,12 +16,12 @@ import com.vaadin.flow.server.VaadinSession;
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
     private final LoginForm loginForm = new LoginForm();
     private final LoginI18n loginI18n = LoginI18n.createDefault();
-    private final CustomerService customerService;
+    private final UserService userService;
     private final RegisterView registerView = new RegisterView();
     private final Tab loginTab = new Tab(loginForm, registerView);
 
-    public LoginView(CustomerService customerService) {
-        this.customerService = customerService;
+    public LoginView(UserService userService) {
+        this.userService = userService;
         H1 header = new H1("Welcome to Travel Agency");
         add(header, loginTab);
         buildForm();
@@ -51,9 +51,9 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
     private void clickLoginButton() {
         loginForm.addLoginListener(event -> {
-            if(customerService.existByName(event.getUsername())) {
-                CustomerDto customerDto = customerService.loadUserByUsername(event.getUsername());
-                CustomerDtoMap.getInstance().addToMap(VaadinSession.getCurrent(), customerDto);
+            if(userService.existByName(event.getUsername())) {
+                UserDto userDto = userService.loadUserByUsername(event.getUsername());
+                UserDtoMap.getInstance().addToMap(VaadinSession.getCurrent(), userDto);
             }
         });
     }
@@ -63,7 +63,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
     }
 
     private void enableRegisterView() {
-        registerView.setCustomerService(customerService);
+        registerView.setUserService(userService);
         registerView.setLoginForm(loginForm);
         registerView.setVisible(true);
         loginForm.setVisible(false);
