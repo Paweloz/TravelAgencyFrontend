@@ -1,5 +1,6 @@
 package com.travel.agency.client;
 
+import com.sun.jndi.toolkit.url.Uri;
 import com.travel.agency.config.BackendConfig;
 import com.travel.agency.domain.UserDto;
 import lombok.RequiredArgsConstructor;
@@ -61,10 +62,27 @@ public class UserClient {
 
     public UserDto getUserById(Long id) {
         try {
-            
+            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getUserEndpoint() + "/getDetails")
+                    .queryParam("userId", id)
+                    .build()
+                    .encode()
+                    .toUri();
+            return restTemplate.getForObject(uri, UserDto.class);
         } catch ( RestClientException e) {
             log.warn("Could retrieve user with id : " + id);
         }
         return new UserDto();
+    }
+
+    public void editUser(UserDto userDto) {
+        try {
+            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getUserEndpoint() +"/edit")
+                    .build()
+                    .encode()
+                    .toUri();
+            restTemplate.put(uri, userDto);
+        } catch (RestClientException e) {
+            log.warn("Could edit user with id : " + userDto.getId() );
+        }
     }
 }

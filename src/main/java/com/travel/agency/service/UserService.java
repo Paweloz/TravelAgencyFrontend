@@ -28,4 +28,8 @@ public class UserService implements UserDetailsService {
     public Boolean saveNewUser(UserDto userDto) {
         return userClient.saveUserInDB(userDto);
     }
+
+    public void saveEditedUser(UserDto userDto) {
+        userClient.editUser(userDto);
+    }
 }
