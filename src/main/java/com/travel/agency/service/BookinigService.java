@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @RequiredArgsConstructor
@@ -29,5 +30,9 @@ public class BookinigService {
                 tripsDto.getTotalPrice(),
                 userDto.getId()
         );
+    }
+
+    public List<BookingDto> getBookingsForUser(Long id) {
+        return bookingClient.getBookingsByUserId(id);
     }
 }

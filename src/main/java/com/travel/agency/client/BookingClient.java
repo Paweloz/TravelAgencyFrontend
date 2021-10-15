@@ -11,6 +11,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -30,5 +33,20 @@ public class BookingClient {
             log.warn("Could save booking for user with ID : " + bookingDto.getUserId() );
         }
         return new BookingDto();
+    }
+
+    public List<BookingDto> getBookingsByUserId(Long id) {
+        try {
+            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getBookingEndpoint() + "/userId")
+                    .queryParam("userId", id)
+                    .build()
+                    .encode()
+                    .toUri();
+            BookingDto[] bookingDtos = restTemplate.getForObject(uri, BookingDto[].class);
+            return bookingDtos != null ? Arrays.asList(bookingDtos) : new ArrayList<>();
+        } catch (RestClientException e) {
+            log.warn("Couldn't retrieve bookings for user with id : " + id);
+        }
+        return new ArrayList<>();
     }
 }

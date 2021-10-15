@@ -104,5 +104,4 @@ public class TripsView extends VerticalLayout {
             message.setText("Couldn't find any trips for given parameters");
         }
     }
-
 }
