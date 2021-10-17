@@ -17,9 +17,9 @@ import com.vaadin.flow.router.Route;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-@Route(value = "register" )
 @Getter
 @Slf4j
+@Route(value = "register" )
 public class RegisterView extends VerticalLayout {
     private UserService userService;
     private LoginForm loginForm;
@@ -36,7 +36,6 @@ public class RegisterView extends VerticalLayout {
 
     public RegisterView() {
         addClassName("register-form");
-        back.setClassName("back-button");
         message.setText("Please enter your details and click 'submit'");
         submit.addClickShortcut(Key.ENTER);
         back.addClickShortcut(Key.ESCAPE);

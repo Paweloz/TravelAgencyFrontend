@@ -35,4 +35,8 @@ public class BookinigService {
     public List<BookingDto> getBookingsForUser(Long id) {
         return bookingClient.getBookingsByUserId(id);
     }
+
+    public void removeBooking(BookingDto booking) {
+        bookingClient.removeBooking(booking.getId());
+    }
 }

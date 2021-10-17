@@ -1,7 +1,6 @@
 package com.travel.agency.ui;
 
 import com.travel.agency.domain.*;
-import com.travel.agency.security.SecurityConfiguration;
 import com.travel.agency.service.BookinigService;
 import com.travel.agency.service.HotelService;
 import com.travel.agency.service.TravelService;
@@ -9,7 +8,7 @@ import com.travel.agency.service.TripService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
@@ -31,7 +30,7 @@ public class TripsView extends VerticalLayout {
     private final ComboBox<TravelOrigins> selectOrigin = new ComboBox<>();
     private final Button submit = new Button("Search");
     private List<TripsDto> tripsToDisplay = new ArrayList<>();
-    private Label message = new Label("Please choose your departure date and destination");
+    private H2 message = new H2("Please choose your departure date and destination");
     private HorizontalLayout browserSection = new HorizontalLayout();
 
     public TripsView(TravelService travelService,
@@ -57,13 +56,20 @@ public class TripsView extends VerticalLayout {
 
         submit.addClickListener(event -> searchForTrips());
         searchingResults.addItemDoubleClickListener(event -> bookTrip(event.getItem()) );
+        searchingResults.addComponentColumn(this::createBookButton).setHeader("Action");
         browserSection.add(selectOrigin, selectDestination, submit, message);
         browserSection.setDefaultVerticalComponentAlignment(Alignment.END);
     }
 
-    private void bookTrip(TripsDto chosenTrip) {
+    private Button createBookButton(TripsDto trip) {
+        Button bookButton = new Button("Book now");
+        bookButton.addClickListener(event -> bookTrip(trip));
+        return bookButton;
+    }
+
+    private void bookTrip(TripsDto trip) {
         UserDto currentUser = UserDtoMap.getInstance().getCustomerMap().get(VaadinSession.getCurrent());
-        BookingDto bookingToSave = bookinigService.createBooking(chosenTrip, currentUser);
+        BookingDto bookingToSave = bookinigService.createBooking(trip, currentUser);
         bookinigService.bookTrip(bookingToSave);
     }
 
@@ -98,9 +104,7 @@ public class TripsView extends VerticalLayout {
     }
 
     private void setMessage(List<Travel> fetchedTravel) {
-        if (fetchedTravel.size() != 0) {
-            message.setText("Click twice to book trip");
-        } else {
+        if (fetchedTravel.size() == 0) {
             message.setText("Couldn't find any trips for given parameters");
         }
     }

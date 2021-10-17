@@ -49,4 +49,17 @@ public class BookingClient {
         }
         return new ArrayList<>();
     }
+
+    public void removeBooking(Long id) {
+        try {
+            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getBookingEndpoint())
+                    .queryParam("bookingId", id)
+                    .build()
+                    .encode()
+                    .toUri();
+            restTemplate.delete(uri);
+        } catch (RestClientException e) {
+            log.warn("Could remove booking with id : " + id);
+        }
+    }
 }
