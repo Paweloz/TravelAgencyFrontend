@@ -17,4 +17,6 @@ public class BackendConfig {
     private String hotelEndpoint;
     @Value("${booking.endpoint}")
     private String bookingEndpoint;
+    @Value("${message.endpoint}")
+    private String messageEndpoint;
 }
