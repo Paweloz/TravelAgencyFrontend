@@ -29,5 +29,6 @@ public class SecurityService {
         logoutHandler.logout(
                 VaadinServletRequest.getCurrent().getHttpServletRequest(), null,
                 null);
+
     }
 }

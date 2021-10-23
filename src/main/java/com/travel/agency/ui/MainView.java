@@ -1,6 +1,10 @@
 package com.travel.agency.ui;
 
+import com.travel.agency.domain.LoginDto;
+import com.travel.agency.domain.UserDto;
+import com.travel.agency.domain.UserDtoMap;
 import com.travel.agency.security.SecurityService;
+import com.travel.agency.service.LoginService;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -10,21 +14,28 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.VaadinSession;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 public class MainView extends AppLayout {
 
     private final SecurityService securityService;
+    private final LoginService loginService;
+    private final static String LOGOUT = "LOGGED OUT";
 
-    public MainView(SecurityService securityService) {
+    public MainView(SecurityService securityService, LoginService loginService) {
         this.securityService = securityService;
+        this.loginService = loginService;
         createHeader();
         createDrawer();
     }
 
     private void createHeader() {
         H1 banner = new H1("Find your dream trip");
-        Button logout = new Button("logout", event -> securityService.logout());
+        Button logout = new Button("logout", event -> createLogoutEvent());
 
         HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), banner, logout);
         header.expand(banner);
@@ -43,5 +54,12 @@ public class MainView extends AppLayout {
                 new RouterLink("Edit user details", UserDetailsView.class),
                 new RouterLink("Contact", ContactView.class)
         ));
+    }
+
+    private void createLogoutEvent() {
+        UserDto userDto = UserDtoMap.getInstance().getUserDtoByKey(VaadinSession.getCurrent());
+        LoginDto loginDto = new LoginDto(LocalDateTime.now(), LOGOUT, userDto.getId());
+        loginService.createLoginEvent(loginDto);
+        securityService.logout();
     }
 }

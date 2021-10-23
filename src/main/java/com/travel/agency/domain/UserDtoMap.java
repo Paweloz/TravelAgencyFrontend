@@ -27,7 +27,7 @@ public class UserDtoMap {
         customerMap.remove(vaadinSession);
     }
 
-    public UserDto getAppUserDtoByKey(VaadinSession vaadinSession){
+    public UserDto getUserDtoByKey(VaadinSession vaadinSession){
         return customerMap.get(vaadinSession);
     }
 
