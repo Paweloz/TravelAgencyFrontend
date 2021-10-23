@@ -19,4 +19,7 @@ public class BackendConfig {
     private String bookingEndpoint;
     @Value("${message.endpoint}")
     private String messageEndpoint;
+    @Value("${problem.endpoint}")
+    private String problemEndpoint;
+
 }

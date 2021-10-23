@@ -15,8 +15,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.VaadinSession;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -47,13 +45,21 @@ public class MainView extends AppLayout {
 
     private void createDrawer() {
         RouterLink home = new RouterLink("Home", HomeView.class);
+        RouterLink adminPanel = new RouterLink("Admin Panel", AdminView.class);
         home.setHighlightCondition(HighlightConditions.sameLocation());
+        adminPanel.setVisible(checkUserRole());
         addToDrawer(new VerticalLayout(home,
                 new RouterLink("Find Trip", TripsView.class),
                 new RouterLink("Your Bookings", BookingView.class),
                 new RouterLink("Edit user details", UserDetailsView.class),
-                new RouterLink("Contact", ContactView.class)
+                new RouterLink("Contact", ContactView.class),
+                adminPanel
         ));
+    }
+
+    private boolean checkUserRole() {
+        UserDto userDto = UserDtoMap.getInstance().getUserDtoByKey(VaadinSession.getCurrent());
+        return userDto.getRole().equals("ADMIN");
     }
 
     private void createLogoutEvent() {
