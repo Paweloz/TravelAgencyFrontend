@@ -2,6 +2,7 @@ package com.travel.agency.client;
 
 import com.travel.agency.config.BackendConfig;
 import com.travel.agency.domain.HotelDto;
+import com.travel.agency.service.AppProblemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.net.URI;
 public class HotelClient {
     private final BackendConfig backendConfig;
     private final RestTemplate restTemplate;
+    private final AppProblemService appProblemService;
 
     public String getHotelId(String location) {
         try {
@@ -26,7 +28,8 @@ public class HotelClient {
                     .toUri();
             return restTemplate.getForObject(uri, String.class);
         }catch (RestClientException e) {
-            log.warn("Couldn't retrive hotelId for location : " + location);
+            log.warn("Couldn't retrieve hotelId for location : " + location + " " + e.getMessage());
+            appProblemService.reportProblem("Couldn't retrieve hotelId for location : " + location + " " + e.getMessage());
         }
         return "";
     }
@@ -43,7 +46,8 @@ public class HotelClient {
             HotelDto hotelDto = restTemplate.getForObject(uri, HotelDto.class);
             return hotelDto != null ? hotelDto : new HotelDto();
         } catch (RestClientException e) {
-            log.warn("Could retrieve pricing from external service");
+            log.warn("Could retrieve pricing from external service " +e.getMessage());
+            appProblemService.reportProblem("Could retrieve pricing from external service" + e.getMessage());
         }
         return new HotelDto();
     }

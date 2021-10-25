@@ -16,8 +16,8 @@ public class UserMessageService {
 
     private final UserMessageClient userMessageClient;
 
-    public void sendMessage(UserMessageDto userMessage) {
-        userMessageClient.sendMessage(userMessage);
+    public Boolean sendMessage(UserMessageDto userMessage) {
+       return userMessageClient.sendMessage(userMessage);
     }
 
     public UserMessageDto buildMessage(String message) {

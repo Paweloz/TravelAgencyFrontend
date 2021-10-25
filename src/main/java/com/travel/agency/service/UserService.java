@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -31,5 +33,13 @@ public class UserService implements UserDetailsService {
 
     public void saveEditedUser(UserDto userDto) {
         userClient.editUser(userDto);
+    }
+
+    public List<UserDto> getAllUsers() {
+        return userClient.getAllUsers();
+    }
+
+    public void removeUserById(Long id) {
+        userClient.removeUser(id);
     }
 }

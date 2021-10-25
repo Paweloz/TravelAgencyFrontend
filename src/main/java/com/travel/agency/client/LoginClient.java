@@ -2,6 +2,7 @@ package com.travel.agency.client;
 
 import com.travel.agency.config.BackendConfig;
 import com.travel.agency.domain.LoginDto;
+import com.travel.agency.service.AppProblemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ import java.net.URI;
 public class LoginClient {
     private final BackendConfig backendConfig;
     private final RestTemplate restTemplate;
+    private final AppProblemService appProblemService;
 
     public Boolean saveLoginEvent(LoginDto loginDto) {
         try {
@@ -27,7 +29,8 @@ public class LoginClient {
                     .toUri();
             restTemplate.postForObject(uri, loginDto, Boolean.class );
         } catch (RestClientException e) {
-            log.warn("Couldn't save login : " + loginDto.getEventType() + " " + loginDto.getDate().toString() );
+            log.warn("Couldn't save login : " + loginDto.getEventType() + " " + loginDto.getDate().toString());
+            appProblemService.reportProblem("Couldn't save login event " + e.getMessage());
         }
         return false;
     }

@@ -1,5 +1,6 @@
 package com.travel.agency.client;
 
+import com.sun.jndi.toolkit.url.Uri;
 import com.travel.agency.config.BackendConfig;
 import com.travel.agency.domain.AppProblemDto;
 import lombok.RequiredArgsConstructor;
@@ -24,15 +25,41 @@ public class AppProblemClient {
 
     public List<AppProblemDto> getProblems() {
         try {
-            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getUserEndpoint())
+            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getProblemEndpoint())
                     .build()
                     .encode()
                     .toUri();
             AppProblemDto[] problemDtos = restTemplate.getForObject(uri, AppProblemDto[].class);
             return problemDtos != null ? Arrays.asList(problemDtos) : new ArrayList<>();
         } catch (RestClientException e) {
-            log.warn("Could retrieve problems from DB : " + e.getStackTrace());
+            log.warn("Could retrieve problems from DB : " + e.getMessage());
         }
         return new ArrayList<>();
+    }
+
+    public void reportProblem(AppProblemDto appProblemDto) {
+        try {
+            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getProblemEndpoint())
+                    .build()
+                    .encode()
+                    .toUri();
+            restTemplate.postForObject(uri, appProblemDto, Boolean.class);
+        } catch (RestClientException e) {
+            log.warn("Couldn't report  problem : " + e.getMessage());
+        }
+    }
+
+
+    public void removeProblem(Long id) {
+        try {
+            URI uri = UriComponentsBuilder.fromHttpUrl(backendConfig.getProblemEndpoint())
+                    .queryParam("problemId", id)
+                    .build()
+                    .encode()
+                    .toUri();
+            restTemplate.delete(uri);
+        } catch (RestClientException e) {
+            log.warn("Couldn't remove problem with id : " + id);
+        }
     }
 }

@@ -13,4 +13,9 @@ public class AppProblemDto {
     private Long id;
     private String problemType;
     private LocalDateTime localDateTime;
+
+    public AppProblemDto(String problemType, LocalDateTime localDateTime) {
+        this.problemType = problemType;
+        this.localDateTime = localDateTime;
+    }
 }

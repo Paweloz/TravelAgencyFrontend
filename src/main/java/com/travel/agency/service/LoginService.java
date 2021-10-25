@@ -11,7 +11,7 @@ public class LoginService {
     private final LoginClient loginClient;
 
 
-    public Boolean createLoginEvent(LoginDto loginDto) {
-        return loginClient.saveLoginEvent(loginDto);
+    public void createLoginEvent(LoginDto loginDto) {
+         loginClient.saveLoginEvent(loginDto);
     }
 }

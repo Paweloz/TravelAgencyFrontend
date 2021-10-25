@@ -2,6 +2,7 @@ package com.travel.agency.client;
 
 import com.travel.agency.config.BackendConfig;
 import com.travel.agency.domain.Travel;
+import com.travel.agency.service.AppProblemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ public class TravelClient {
 
     private final RestTemplate restTemplate;
     private final BackendConfig backendConfig;
+    private final AppProblemService appProblemService;
 
     public List<Travel> getAvaliableTrips(String origin, String destination) {
         try {
@@ -33,7 +35,8 @@ public class TravelClient {
             Travel[] travels = restTemplate.getForObject(uri, Travel[].class);
             return travels != null ? Arrays.asList(travels) : new ArrayList<>();
         }catch (RestClientException e) {
-            log.warn("Couldn't retrieve available travels from the server");
+            log.warn("Couldn't retrieve available travels from the server " + e.getMessage());
+            appProblemService.reportProblem("Couldn't retrieve available travels from the server " + e.getMessage());
         }
         return new ArrayList<>();
     }
