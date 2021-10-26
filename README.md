@@ -13,7 +13,7 @@
 
 ## App description
 
-Travel Agency app uses to external sources of data Skycanner and Hotels.com and combines result of those two into trips,
+Travel Agency app uses two external sources of data Skycanner and Hotels.com and combines result of those two into trips,
 which users can book. Due limited API free requests to Hotels.com ( 500 / month ) all data retrieved from them is stored in 
 DB in order to save request quantity.
 
