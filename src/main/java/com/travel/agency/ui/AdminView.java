@@ -32,6 +32,7 @@ public class AdminView extends VerticalLayout {
         List<AppProblemDto> problemsToDisplay = appProblemService.getProblems();
         problemsGrid.setItems(problemsToDisplay);
         problemsGrid.addComponentColumn(item -> createRemoveButton(problemsGrid, item)).setHeader("Action");
+        problemsGrid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
     private void setUserView() {
@@ -40,6 +41,7 @@ public class AdminView extends VerticalLayout {
         usersGrid.setItems(userToDisplay);
         usersGrid.setColumns("id", "username", "lastname", "email", "phone", "role");
         usersGrid.addComponentColumn(item -> createRemoveButton(usersGrid, item)).setHeader("Action");
+        usersGrid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
     private Button createRemoveButton(Grid<AppProblemDto> appProblemsGrid, AppProblemDto appProblemDto) {

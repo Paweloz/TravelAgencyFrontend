@@ -57,6 +57,7 @@ public class TripsView extends VerticalLayout {
         submit.addClickListener(event -> searchForTrips());
         searchingResults.addItemDoubleClickListener(event -> bookTrip(event.getItem()) );
         searchingResults.addComponentColumn(this::createBookButton).setHeader("Action");
+        searchingResults.getColumns().forEach(col -> col.setAutoWidth(true));
         browserSection.add(selectOrigin, selectDestination, submit, message);
         browserSection.setDefaultVerticalComponentAlignment(Alignment.END);
     }

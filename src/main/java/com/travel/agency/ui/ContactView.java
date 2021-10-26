@@ -29,10 +29,7 @@ public class ContactView extends VerticalLayout {
 
     private void clickSendButton() {
         UserMessageDto userMessage = userMessageService.buildMessage(message.getValue());
-        if (userMessageService.sendMessage(userMessage)) {
-            confirmNotification.open();
-        } else {
-            failNotification.open();
-        }
+        userMessageService.sendMessage(userMessage);
+        confirmNotification.open();
     }
 }

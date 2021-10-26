@@ -32,6 +32,7 @@ public class BookingView extends VerticalLayout {
     public void init() {
         bookingList.setItems(retrieveBookings());
         bookingList.addComponentColumn(item -> createButton(bookingList, item)).setHeader("Action");
+        bookingList.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
     private List<BookingDto> retrieveBookings() {
